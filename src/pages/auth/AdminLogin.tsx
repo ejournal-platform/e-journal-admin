@@ -6,7 +6,7 @@ const AdminLogin = () => {
   const navigate = useNavigate();
 
   const DUMMY_ADMINS = [
-    { nic: "991234567V", password: "admin123" },
+    { nic: "1", password: "2" },
     { nic: "982345678V", password: "secure456" },
     { nic: "972987654V", password: "foodsafe789" },
     { nic: "200012345678", password: "journal001" },
@@ -21,21 +21,31 @@ const AdminLogin = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
-
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
 
-    const foundAdmin = DUMMY_ADMINS.find(
-      (admin) => admin.nic === nic && admin.password === password
-    );
-    if (foundAdmin) {
-      setMessage({ type: "success", text: "Login successful! Redirecting..." });
-      navigate("/dashboard/moderation");
-    } else {
-      setMessage({ type: "error", text: "Invalid NIC or password. Please try again." });
-    }
+    setTimeout(() => {
+      const foundAdmin = DUMMY_ADMINS.find(
+        (admin) => admin.nic === nic && admin.password === password
+      );
+
+      setIsLoading(false);
+
+      if (foundAdmin) {
+        setMessage({
+          type: "success",
+          text: "Login successful! Redirecting..."
+        });
+
+        setTimeout(() => {
+          navigate("/dashboard/moderation");
+        }, 1000);
+      } else {
+        setMessage({
+          type: "error",
+          text: "Invalid NIC or password. Please try again."
+        });
+      }
+    }, 1000);
   };
 
   return (
@@ -103,7 +113,7 @@ const AdminLogin = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute bg-white! top-7.5 right-1 text-gray-500 hover:text-gray-700 focus:outline-none! focus:ring-0! active:outline-none! active:ring-0"
+                className="absolute bg-white! top-7.5 right-1 text-gray-500 hover:text-gray-700 focus:outline-none! border-none!"
               >
                 {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
               </button>
@@ -122,8 +132,8 @@ const AdminLogin = () => {
               {message && (
                 <div
                   className={`p-3 rounded-lg text-sm font-medium text-center ${message.type === "error"
-                      ? "text-red-700 bg-red-100 border border-red-300"
-                      : "text-green-700 bg-green-100 border border-green-300"
+                    ? "text-red-700 bg-red-100 border border-red-300"
+                    : "text-green-700 bg-green-100 border border-green-300"
                     }`}
                 >
                   {message.text}
