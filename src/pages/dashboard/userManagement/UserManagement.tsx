@@ -5,7 +5,7 @@ import UserTable from "../../../components/userManagement/UserTable";
 import PaginationControls from "../../../components/userManagement/PaginationControls";
 import AddUserModal from "../../../components/userManagement/AddUserModal";
 
-const UserManagement: React.FC = () => {
+const UserManagement = () => {
   const [users, setUsers] = useState<User[]>([
    { id: 1, name: "John Doe", nic: "991234567V", role: "Master Trainer" },
     { id: 2, name: "Jane Smith", nic: "982345678V", role: "TOT" },

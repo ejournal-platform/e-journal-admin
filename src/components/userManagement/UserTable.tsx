@@ -8,7 +8,7 @@ interface UserTableProps {
   onDelete: (id: number) => void;
 }
 
-const UserTable: React.FC<UserTableProps> = ({ users, onEdit, onDelete }) => {
+const UserTable = ({ users, onEdit, onDelete } : UserTableProps ) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">

@@ -9,13 +9,7 @@ interface UserFilterBarProps {
   onAddUserClick: () => void;
 }
 
-const UserFilterBar: React.FC<UserFilterBarProps> = ({
-  search,
-  selectedRole,
-  onSearchChange,
-  onRoleChange,
-  onAddUserClick,
-}) => {
+const UserFilterBar = ({ search, selectedRole, onSearchChange, onRoleChange, onAddUserClick} : UserFilterBarProps) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 mb-6">
       <div className="flex flex-col md:flex-row justify-between items-center gap-4">

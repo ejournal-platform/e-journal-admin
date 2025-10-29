@@ -112,13 +112,13 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({
         <div className="flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="bg-gray-200! text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300! hover:text-black transition focus:outline-none! border-none!"
+            className="bg-gray-200! text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300! hover:text-black transition focus:outline-none! border-none! text-sm!"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="bg-green-600! text-white px-4 py-2 rounded-lg hover:bg-green-700! transition focus:outline-none! border-none!"
+            className="bg-green-600! text-white px-4 py-2 rounded-lg hover:bg-green-700! transition focus:outline-none! border-none! text-sm!"
           >
             Save Changes
           </button>
