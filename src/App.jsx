@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import AdminLogin from "./pages/auth/AdminLogin";
 import DashboardLayout from "./layouts/DashboardLayout"; 
 import "./App.css";
+import Announcements from "./pages/dashboard/announcements/Announcements";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,7 +32,8 @@ const App = () => {
           path="/dashboard/*"
           element={<DashboardLayout onLogout={handleLogout} />}
         >
-          <Route index element={<Navigate to="community" replace />} />
+          <Route index element={<Navigate to="announcements" replace />} />
+           <Route path="announcements" element={<Announcements />} />
         </Route>
 
         {/* Fallback Route */}
