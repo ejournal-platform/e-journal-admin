@@ -7,7 +7,7 @@ import AddUserModal from "../../../components/userManagement/AddUserModal";
 
 const UserManagement = () => {
   const [users, setUsers] = useState<User[]>([
-   { id: 1, name: "John Doe", nic: "991234567V", role: "Master Trainer" },
+    { id: 1, name: "John Doe", nic: "991234567V", role: "Master Trainer" },
     { id: 2, name: "Jane Smith", nic: "982345678V", role: "TOT" },
     { id: 3, name: "Alex Perera", nic: "973456789V", role: "End User" },
     { id: 4, name: "Nimal Silva", nic: "963456789V", role: "TOT" },
@@ -28,7 +28,7 @@ const UserManagement = () => {
     { id: 19, name: "Buddhika Jayasuriya", nic: "913456780V", role: "End User" },
     { id: 20, name: "Menaka Wickramasinghe", nic: "903456780V", role: "TOT" },
   ]);
-  
+
   const [search, setSearch] = useState("");
   const [selectedRole, setSelectedRole] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,9 +59,9 @@ const UserManagement = () => {
   return (
     <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-8">
       {/* Header */}
-        <div>
-          <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-5 text-center sm:text-left">Manage Users</h2>
-          <p className="text-gray-600 mb-6text-gray-600 mb-6">Manage all users in the system.</p>
+      <div>
+        <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-5 text-center sm:text-left">Manage Users</h2>
+        <p className="text-gray-600 mb-6text-gray-600 mb-6">Manage all users in the system.</p>
       </div>
 
       {/* Search, Filter, Add */}
@@ -76,12 +76,18 @@ const UserManagement = () => {
       {/* User Table */}
       <UserTable
         users={paginatedUsers}
-        onEdit={(id) => alert(`Edit user ${id}`)}
+        onEdit={(updatedUser) => {
+          setUsers((prevUsers) =>
+            prevUsers.map((user) =>
+              user.id === updatedUser.id ? updatedUser : user
+            )
+          );
+        }}
         onDelete={(id) =>
           setUsers((prev) => prev.filter((user) => user.id !== id))
         }
       />
-
+      
       {/* Pagination */}
       <PaginationControls
         currentPage={currentPage}
