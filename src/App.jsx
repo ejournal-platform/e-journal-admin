@@ -5,6 +5,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import "./App.css";
 import Announcements from "./pages/dashboard/announcements/Announcements";
 import UserManagement from "./pages/dashboard/userManagement/UserManagement";
+import ContentModeration from "./pages/dashboard/contentModeration/ContentModeration";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,6 +37,7 @@ const App = () => {
           <Route index element={<Navigate to="announcements" replace />} />
            <Route path="announcements" element={<Announcements />} />
            <Route path="user_management" element={<UserManagement />} />
+           <Route path="moderation" element={<ContentModeration />} />
         </Route>
 
         {/* Fallback Route */}

@@ -27,10 +27,10 @@ const PaginationControls: React.FC<PaginationProps> = ({
         <button
           onClick={onPrevious}
           disabled={currentPage === 1}
-          className={`px-4 py-2 text-sm font-medium rounded-md ${
+          className={`px-4 py-2 text-sm! font-medium rounded-md focus:outline-none! border-none! ${
             currentPage === 1
-              ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              ? "bg-gray-200! text-gray-400! cursor-not-allowed"
+              : "bg-gray-500! text-white"
           }`}
         >
           Previous
@@ -38,10 +38,10 @@ const PaginationControls: React.FC<PaginationProps> = ({
         <button
           onClick={onNext}
           disabled={currentPage === totalPages}
-          className={`px-4 py-2 text-sm font-medium rounded-md ${
+          className={`px-4 py-2 text-sm! font-medium rounded-md focus:outline-none! border-none! ${
             currentPage === totalPages
-              ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              ? "bg-gray-200! text-gray-400! cursor-not-allowed"
+              : "bg-gray-500! text-white"
           }`}
         >
           Next
