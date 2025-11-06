@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { FaEdit, FaTrashAlt, FaEye } from "react-icons/fa";
 import { User } from "../../components/userManagement/type";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
@@ -11,6 +11,9 @@ interface UserTableProps {
 
 const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isViewOpen, setIsViewOpen] = useState(false); 
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+
   const [editName, setEditName] = useState("");
   const [editNic, setEditNic] = useState("");
   const [editRole, setEditRole] = useState("End User");
@@ -23,6 +26,12 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
     setEditRole(user.role);
     setIsEditOpen(true);
   };
+
+    const handleViewClick = (user: User) => {
+    setSelectedUser(user);
+    setIsViewOpen(true);
+  };
+
 
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,6 +54,11 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
     setEditingUser(null);
   }
 
+  const handleViewClose = () => {
+    setIsViewOpen(false);
+    setSelectedUser(null);
+  };
+
   return (
     <>
       <div className="bg-white rounded-lg shadow-md p-6 overflow-x-auto">
@@ -60,7 +74,7 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                 Role
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">
                 Actions
               </th>
             </tr>
@@ -73,8 +87,14 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
                 <td className="px-6 py-4 text-sm text-gray-600">{user.role}</td>
                 <td className="px-6 py-4 text-right text-sm font-medium space-x-3">
                   <button
+                    onClick={() => handleViewClick(user)}
+                    className="text-green-600 hover:text-green-900 focus:outline-none! border-none!"
+                  >
+                    <FaEye className="inline-block mr-1" /> View
+                  </button>
+                  <button
                     onClick={() => handleEditClick(user)}
-                    className="text-blue-600 hover:text-blue-900! focus:outline-none! border-none!"
+                    className="text-blue-600 hover:text-blue-900 focus:outline-none! border-none!"
                   >
                     <FaEdit className="inline-block mr-1" /> Edit
                   </button>
@@ -161,6 +181,36 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* View model */}
+      {isViewOpen && selectedUser && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
+            <h2 className="text-lg text-center font-sans font-bold mb-4 text-gray-800">
+              User Details
+            </h2>
+
+            <div className="space-y-3 text-gray-700">
+              <p><strong>Name:</strong> {selectedUser.name}</p>
+              <p><strong>Email:</strong> {selectedUser.email || "N/A"}</p>
+              <p><strong>Phone:</strong> {selectedUser.phone || "N/A"}</p>
+              <p><strong>WhatsApp:</strong> {selectedUser.whatsapp || "N/A"}</p>
+              <p><strong>District:</strong> {selectedUser.district || "N/A"}</p>
+              <p><strong>Role:</strong> {selectedUser.role}</p>
+              <p><strong>Password:</strong> {selectedUser.password || "••••••"}</p>
+            </div>
+
+            <div className="flex justify-end mt-6">
+              <button
+                onClick={handleViewClose}
+                className="px-4 py-2 bg-blue-600! text-white rounded-md hover:bg-blue-700! focus:outline-none! border-none! text-sm!"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
