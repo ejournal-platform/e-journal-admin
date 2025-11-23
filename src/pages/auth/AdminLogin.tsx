@@ -1,51 +1,44 @@
 import React, { useState } from "react";
 import { FaLeaf, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "../../api/hooks/auth";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
 
-  const DUMMY_ADMINS = [
-    { nic: "1", password: "2" },
-    { nic: "982345678V", password: "secure456" },
-    { nic: "972987654V", password: "foodsafe789" },
-    { nic: "200012345678", password: "journal001" },
-  ];
+  // Removed DUMMY_ADMINS
 
   const [nic, setNic] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<{ type: "error" | "success"; text: string } | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { mutate: login, isPending: isLoading } = useLogin();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
-    setIsLoading(true);
+    login(
+      { nic, password },
+      {
+        onSuccess: (data) => {
+          localStorage.setItem('token', data.token); // Store token manually as Admin might not use AuthContext yet or uses it differently
+          setMessage({
+            type: "success",
+            text: "Login successful! Redirecting..."
+          });
 
-    setTimeout(() => {
-      const foundAdmin = DUMMY_ADMINS.find(
-        (admin) => admin.nic === nic && admin.password === password
-      );
-
-      setIsLoading(false);
-
-      if (foundAdmin) {
-        setMessage({
-          type: "success",
-          text: "Login successful! Redirecting..."
-        });
-
-        setTimeout(() => {
-          navigate("/dashboard/moderation");
-        }, 1000);
-      } else {
-        setMessage({
-          type: "error",
-          text: "Invalid NIC or password. Please try again."
-        });
+          setTimeout(() => {
+            navigate("/dashboard/moderation");
+          }, 1000);
+        },
+        onError: () => {
+          setMessage({
+            type: "error",
+            text: "Invalid NIC or password. Please try again."
+          });
+        }
       }
-    }, 1000);
+    );
   };
 
   return (

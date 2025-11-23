@@ -6,12 +6,12 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 interface UserTableProps {
   users: User[];
   onEdit: (user: User) => void;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [isViewOpen, setIsViewOpen] = useState(false); 
+  const [isViewOpen, setIsViewOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const [editName, setEditName] = useState("");
@@ -27,7 +27,7 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
     setIsEditOpen(true);
   };
 
-    const handleViewClick = (user: User) => {
+  const handleViewClick = (user: User) => {
     setSelectedUser(user);
     setIsViewOpen(true);
   };
@@ -175,7 +175,7 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
                 </button>
                 <button
                   type="submit"
-                 className="px-4 py-2 h-10 bg-green-600! text-white rounded-md hover:bg-green-700! focus:outline-none! border-none! text-sm!"
+                  className="px-4 py-2 h-10 bg-green-600! text-white rounded-md hover:bg-green-700! focus:outline-none! border-none! text-sm!"
                 >
                   Update
                 </button>
