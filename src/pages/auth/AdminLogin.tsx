@@ -7,8 +7,8 @@ const AdminLogin = () => {
 
   const DUMMY_ADMINS = [
     { nic: "1", password: "2" },
-    { nic: "982345678V", password: "secure456" },
-    { nic: "972987654V", password: "foodsafe789" },
+    { nic: "798164171V", password: "Judy" },
+    { nic: "199573801049", password: "Chamodi" },
     { nic: "200012345678", password: "journal001" },
   ];
 
@@ -53,9 +53,9 @@ const AdminLogin = () => {
       <div className="flex flex-col md:flex-row w-full max-w-5xl bg-white shadow-2xl rounded-2xl overflow-hidden font-sans">
         {/* Left Side (Brand Section) */}
         <div className="hidden md:flex flex-col items-center justify-center bg-blue-600 text-white p-8 md:w-1/2">
-          <div className="w-16 h-16 flex items-center justify-center rounded-full bg-white text-blue-600">
+          {/* <div className="w-16 h-16 flex items-center justify-center rounded-full bg-white text-blue-600">
             <FaLeaf className="w-8 h-8" />
-          </div>
+          </div> */}
           <h2 className="text-3xl md:text-4xl font-bold mt-5 text-center">
             Food Safety E-Journal
           </h2>
@@ -143,7 +143,7 @@ const AdminLogin = () => {
           </form>
 
           {/* Footer */}
-          <p className="mt-6 text-xs sm:text-sm text-gray-500 text-center">
+          {/* <p className="mt-6 text-xs sm:text-sm text-gray-500 text-center">
             A project by{" "}
             <a
               href="#"
@@ -151,7 +151,7 @@ const AdminLogin = () => {
             >
               FAO/INGO Alliance
             </a>
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
