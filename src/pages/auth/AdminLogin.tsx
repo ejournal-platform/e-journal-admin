@@ -9,7 +9,7 @@ const AdminLogin = () => {
     { nic: "1", password: "2" },
     { nic: "798164171V", password: "Judy" },
     { nic: "199573801049", password: "Chamodi" },
-    { nic: "200012345678", password: "journal001" },
+    { nic: "976392779V", password: "Ishani" },
   ];
 
   const [nic, setNic] = useState("");
