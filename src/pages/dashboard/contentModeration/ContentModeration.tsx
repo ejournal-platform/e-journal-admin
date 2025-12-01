@@ -1,83 +1,197 @@
-import React, { useState, useMemo } from "react";
-import { dummyContent } from "../../../components/contentModeration/data/dummyContentData";
-import { ContentItem } from "../../../components/contentModeration/types";
-import ContentFilterBar from "../../../components/contentModeration/ContentFilterBar";
-import ContentTable from "../../../components/contentModeration/ContentTable";
-import PaginationControls from "../../../components/contentModeration/PaginationControls";
-import ViewContentModal from "../../../components/contentModeration/ViewContentModal";
+import { usePendingPosts, useApprovePost, useRejectPost } from "../../../api/hooks/posts";
+import { useMemo, useState } from "react";
 
-const ITEMS_PER_PAGE = 20;
+interface PostPreview {
+  id: string;
+  title: string;
+  author: string;
+  date: string;
+  images: number;
+  caption: string;
+  mediaUrls: string[];
+}
 
 const ContentModeration = () => {
-  const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("All");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [viewItem, setViewItem] = useState<ContentItem | null>(null);
-  const [contentList, setContentList] = useState<ContentItem[]>(dummyContent);
+  const { data: postsData, isLoading, error } = usePendingPosts();
+  const { mutate: approvePost, isPending: isApproving } = useApprovePost();
+  const { mutate: rejectPost, isPending: isRejecting } = useRejectPost();
+  const [viewingPost, setViewingPost] = useState<PostPreview | null>(null);
 
-  const filteredData = useMemo(() => {
-    return contentList
-      .filter((item) =>
-        item.author.toLowerCase().includes(search.toLowerCase())
-      )
-      .filter((item) => (filter === "All" ? true : item.status === filter));
-  }, [search, filter, contentList]);
+  const pendingPosts = useMemo(() => {
+    if (!postsData) return [];
+    return postsData.map((post) => ({
+      id: post.id,
+      title: post.caption.split('\n')[0] || "Untitled",
+      author: `${post.author.firstName} ${post.author.lastName}`,
+      date: new Date(post.createdAt).toLocaleDateString(),
+      images: post.mediaUrls.length,
+      caption: post.caption,
+      mediaUrls: post.mediaUrls,
+    }));
+  }, [postsData]);
 
-  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
-  const paginatedData = filteredData.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
-
-  const handleConfirm = (id: number) => {
-    setContentList((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, status: "Approved" } : item
-      )
-    );
-    setViewItem(null);
+  const handleApprove = (id: string) => {
+    if (window.confirm("Approve this post?")) {
+      approvePost(id);
+      setViewingPost(null);
+    }
   };
 
-  const handleReject = (id: number) => {
-    setContentList((prev) => prev.filter((item) => item.id !== id));
-    setViewItem(null);
-  };
-
-  const handleDelete = (id: number) => {
-    setContentList((prev) => prev.filter((item) => item.id !== id));
-    setViewItem(null);
+  const handleReject = (id: string) => {
+    if (window.confirm("Reject this post?")) {
+      rejectPost(id);
+      setViewingPost(null);
+    }
   };
 
   return (
-      <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-8">
-      {/* Header */}
-      <div>
-        <h2 className="text-xl sm:text-2xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-5 text-center sm:text-left">Content Moderation</h2>
-        <p className="text-gray-600 mb-6text-gray-600 mb-6">Moderate all contents in the system.</p>
-      </div>
+    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-8">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 sm:mb-8">
+        Content Moderation
+      </h1>
 
-      <ContentFilterBar
-        search={search}
-        onSearch={setSearch}
-        filter={filter}
-        onFilterChange={setFilter}
-      />
+      {isLoading && <p className="text-center text-gray-500">Loading pending posts...</p>}
+      {error && <p className="text-center text-red-500">Failed to load pending posts.</p>}
 
-      <ContentTable data={paginatedData} onView={setViewItem} />
+      {!isLoading && !error && (
+        <>
+          <div className="w-full overflow-x-auto rounded-lg shadow-sm border border-gray-100 bg-white p-3 sm:p-5">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="pb-3 text-sm font-semibold text-gray-700">Title</th>
+                  <th className="pb-3 text-sm font-semibold text-gray-700">Author</th>
+                  <th className="pb-3 text-sm font-semibold text-gray-700">Date</th>
+                  <th className="pb-3 text-sm font-semibold text-gray-700">Images</th>
+                  <th className="pb-3 text-sm font-semibold text-gray-700">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pendingPosts.map((post) => (
+                  <tr key={post.id} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="py-3 text-sm text-gray-800 max-w-xs truncate">
+                      {post.title}
+                    </td>
+                    <td className="py-3 text-sm text-gray-600">{post.author}</td>
+                    <td className="py-3 text-sm text-gray-600">{post.date}</td>
+                    <td className="py-3 text-sm text-gray-600">{post.images}</td>
+                    <td className="py-3 flex gap-2">
+                      <button
+                        onClick={() => setViewingPost(post)}
+                        className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
+                      >
+                        View
+                      </button>
+                      <button
+                        onClick={() => handleApprove(post.id)}
+                        disabled={isApproving || isRejecting}
+                        className="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 disabled:opacity-50"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        onClick={() => handleReject(post.id)}
+                        disabled={isApproving || isRejecting}
+                        className="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 disabled:opacity-50"
+                      >
+                        Reject
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
-      <PaginationControls
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
+            {pendingPosts.length === 0 && (
+              <p className="text-center text-gray-500 py-8">No pending posts to review.</p>
+            )}
+          </div>
 
-      <ViewContentModal 
-        item={viewItem} 
-        onClose={() => setViewItem(null)} 
-        onConfirm={handleConfirm}
-        onReject={handleReject}
-        onDelete={handleDelete}
-      />
+          <p className="mt-4 sm:mt-6 text-xs sm:text-sm text-gray-500 text-right">
+            Showing {pendingPosts.length} pending {pendingPosts.length === 1 ? "post" : "posts"}.
+          </p>
+        </>
+      )}
+
+      {/* Post Preview Modal */}
+      {viewingPost && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <h2 className="text-2xl font-bold text-gray-900">Post Preview</h2>
+                <button
+                  onClick={() => setViewingPost(null)}
+                  className="text-gray-400 hover:text-gray-600 text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm text-gray-500">Author</p>
+                  <p className="text-lg font-semibold text-gray-900">{viewingPost.author}</p>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-500">Date</p>
+                  <p className="text-lg text-gray-900">{viewingPost.date}</p>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-500 mb-2">Caption</p>
+                  <p className="text-gray-800 whitespace-pre-wrap bg-gray-50 p-4 rounded">
+                    {viewingPost.caption}
+                  </p>
+                </div>
+
+                {viewingPost.mediaUrls.length > 0 && (
+                  <div>
+                    <p className="text-sm text-gray-500 mb-2">Images ({viewingPost.mediaUrls.length})</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      {viewingPost.mediaUrls.map((url, index) => (
+                        <img
+                          key={index}
+                          src={url}
+                          alt={`Post image ${index + 1}`}
+                          className="w-full h-48 object-cover rounded"
+                          onError={(e) => {
+                            e.currentTarget.src = "https://placehold.co/400x300/cccccc/333333?text=Image+Not+Available";
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex gap-3 mt-6 pt-6 border-t">
+                <button
+                  onClick={() => handleApprove(viewingPost.id)}
+                  disabled={isApproving || isRejecting}
+                  className="flex-1 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
+                >
+                  Approve
+                </button>
+                <button
+                  onClick={() => handleReject(viewingPost.id)}
+                  disabled={isApproving || isRejecting}
+                  className="flex-1 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
+                >
+                  Reject
+                </button>
+                <button
+                  onClick={() => setViewingPost(null)}
+                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

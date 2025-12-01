@@ -1,33 +1,28 @@
 import React, { useState, useMemo } from "react";
 import { User } from "../../../components/userManagement/type";
+import { useUsers, useDeleteUser, useUpdateUser, useCreateAuthorizedUser } from "../../../api/hooks/user";
+
 import UserFilterBar from "../../../components/userManagement/UserFilterBar";
 import UserTable from "../../../components/userManagement/UserTable";
 import PaginationControls from "../../../components/userManagement/PaginationControls";
 import AddUserModal from "../../../components/userManagement/AddUserModal";
 
 const UserManagement = () => {
-  const [users, setUsers] = useState<User[]>([
-    { id: 1, name: "John Doe", nic: "991234567V", role: "Master Trainer" },
-    { id: 2, name: "Jane Smith", nic: "982345678V", role: "TOT" },
-    { id: 3, name: "Alex Perera", nic: "973456789V", role: "End User" },
-    { id: 4, name: "Nimal Silva", nic: "963456789V", role: "TOT" },
-    { id: 5, name: "Kamal Fernando", nic: "953456789V", role: "Master Trainer" },
-    { id: 6, name: "Tharindu Jayasena", nic: "943456789V", role: "End User" },
-    { id: 7, name: "Amali Rathnayake", nic: "933456789V", role: "TOT" },
-    { id: 8, name: "Sajith Kumara", nic: "923456789V", role: "End User" },
-    { id: 9, name: "Nadeesha Madushani", nic: "913456789V", role: "Master Trainer" },
-    { id: 10, name: "Ruwan Bandara", nic: "903456789V", role: "TOT" },
-    { id: 11, name: "Hiruni Fernando", nic: "993456789V", role: "End User" },
-    { id: 12, name: "Charith Silva", nic: "983456789V", role: "Master Trainer" },
-    { id: 13, name: "Suresh Perera", nic: "973456780V", role: "TOT" },
-    { id: 14, name: "Piumi Jayasinghe", nic: "963456780V", role: "End User" },
-    { id: 15, name: "Anuradha Wijesinghe", nic: "953456780V", role: "Master Trainer" },
-    { id: 16, name: "Malith Rajapaksha", nic: "943456780V", role: "TOT" },
-    { id: 17, name: "Kasuni Udayanga", nic: "933456780V", role: "End User" },
-    { id: 18, name: "Iresh Lakshan", nic: "923456780V", role: "Master Trainer" },
-    { id: 19, name: "Buddhika Jayasuriya", nic: "913456780V", role: "End User" },
-    { id: 20, name: "Menaka Wickramasinghe", nic: "903456780V", role: "TOT" },
-  ]);
+  const { data: usersData, isLoading, error } = useUsers();
+  const { mutate: deleteUser } = useDeleteUser();
+  const { mutate: updateUser } = useUpdateUser();
+  const { mutate: createUser } = useCreateAuthorizedUser();
+
+  const users: User[] = useMemo(() => {
+    if (!usersData) return [];
+    return usersData.map(u => ({
+      id: u.id || "", // Backend should return ID
+      name: `${u.firstName} ${u.lastName}`,
+      nic: u.nic,
+      role: u.role,
+      // email, phone, etc are not in the list response yet, maybe add later if needed
+    }));
+  }, [usersData]);
 
   const [search, setSearch] = useState("");
   const [selectedRole, setSelectedRole] = useState("All");
@@ -53,7 +48,61 @@ const UserManagement = () => {
   );
 
   const handleAddUser = (user: Omit<User, "id">) => {
-    setUsers((prev) => [...prev, { id: Date.now(), ...user }]);
+    const nameParts = user.name.split(" ");
+    const firstName = nameParts[0];
+    const lastName = nameParts.slice(1).join(" ") || "User"; // Default last name if missing
+
+    createUser({
+      nic: user.nic,
+      firstName,
+      lastName,
+      role: user.role,
+    }, {
+      onSuccess: () => {
+        // alert("User added successfully");
+      },
+      onError: (err) => {
+        console.error("Failed to add user", err);
+        alert("Failed to add user");
+      }
+    });
+  };
+
+  const handleUpdateUser = (updatedUser: User) => {
+    const nameParts = updatedUser.name.split(" ");
+    const firstName = nameParts[0];
+    const lastName = nameParts.slice(1).join(" ") || "User";
+
+    updateUser({
+      id: updatedUser.id,
+      data: {
+        firstName,
+        lastName,
+        role: updatedUser.role
+      }
+    }, {
+      onSuccess: () => {
+        // alert("User updated successfully");
+      },
+      onError: (err) => {
+        console.error("Failed to update user", err);
+        alert("Failed to update user");
+      }
+    });
+  };
+
+  const handleDeleteUser = (id: string) => {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      deleteUser(id, {
+        onSuccess: () => {
+          // alert("User deleted successfully");
+        },
+        onError: (err) => {
+          console.error("Failed to delete user", err);
+          alert("Failed to delete user");
+        }
+      });
+    }
   };
 
   return (
@@ -76,18 +125,10 @@ const UserManagement = () => {
       {/* User Table */}
       <UserTable
         users={paginatedUsers}
-        onEdit={(updatedUser) => {
-          setUsers((prevUsers) =>
-            prevUsers.map((user) =>
-              user.id === updatedUser.id ? updatedUser : user
-            )
-          );
-        }}
-        onDelete={(id) =>
-          setUsers((prev) => prev.filter((user) => user.id !== id))
-        }
+        onEdit={handleUpdateUser}
+        onDelete={handleDeleteUser}
       />
-      
+
       {/* Pagination */}
       <PaginationControls
         currentPage={currentPage}
