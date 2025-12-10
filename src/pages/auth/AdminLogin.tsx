@@ -6,8 +6,6 @@ import { useLogin } from "../../api/hooks/auth";
 const AdminLogin = () => {
   const navigate = useNavigate();
 
-  // Removed DUMMY_ADMINS
-
   const [nic, setNic] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<{ type: "error" | "success"; text: string } | null>(null);
