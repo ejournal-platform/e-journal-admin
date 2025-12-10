@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaLeaf, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../api/hooks/auth";
 
@@ -20,7 +20,7 @@ const AdminLogin = () => {
     login(
       { nic, password },
       {
-        onSuccess: (data) => {
+        onSuccess: (data : any) => {
           localStorage.setItem('token', data.token); // Store token manually as Admin might not use AuthContext yet or uses it differently
           setMessage({
             type: "success",
