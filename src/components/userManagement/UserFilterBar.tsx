@@ -32,7 +32,7 @@ const UserFilterBar = ({ search, selectedRole, onSearchChange, onRoleChange, onA
               <option value="Master Trainer">Master Trainer</option>
               <option value="TOT">TOT</option>
               <option value="End User">End User</option>
-              <option value="End User">Staff</option>
+              <option value="Admin">Admin</option>
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <MdKeyboardArrowDown className="w-4 h-4" />

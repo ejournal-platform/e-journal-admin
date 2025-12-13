@@ -83,7 +83,7 @@ const AddUserModal = ({ isOpen, onClose, onSave }: AddUserModalProps) => {
                                 <option>Master Trainer</option>
                                 <option>TOT</option>
                                 <option>End User</option>
-                                <option>Staff</option>
+                                <option>Admin</option>
                             </select>
                             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                 <MdKeyboardArrowDown className="w-4 h-4" />
