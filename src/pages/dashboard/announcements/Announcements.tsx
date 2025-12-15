@@ -1,41 +1,30 @@
 import { useState } from "react";
+import { useCreateAnnouncement, useGetAnnouncements } from "../../../api/hooks/announcement";
+import type { Announcement } from "../../../api/hooks/announcement";
+
 import AnnouncementForm from "../../../components/announcements/AnnouncementForm";
 import AnnouncementCard from "../../../components/announcements/AnnouncementCard";
-import { Announcement } from "../../../components/announcements/types";
 import EditAnnouncementModal from "../../../components/announcements/EditAnnouncementModal";
 
 const Announcements = () => {
-  const [announcements, setAnnouncements] = useState<Announcement[]>([
-    {
-      id: 1,
-      title: "Upcoming Webinar on Food Safety",
-      content:
-        "Join our webinar on food safety practices on July 15th at 2 PM EST. Register now!",
-      image: "https://via.placeholder.com/300x150.png?text=Food+Safety+Webinar",
-    },
-    {
-      id: 2,
-      title: "New Article Published: Foodborne Illness Prevention",
-      content:
-        "Check out our latest article on preventing foodborne illnesses in your home and community.",
-      image: "https://via.placeholder.com/300x150.png?text=Illness+Prevention",
-    },
-  ]);
+  const { data: announcements = [], isLoading, error } = useGetAnnouncements();
+  const { mutate: createAnnouncement } = useCreateAnnouncement();
 
   const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
 
-  const handlePublish = (title: string, content: string, image: string | null) => {
-    const newAnnouncement: Announcement = {
-      id: Date.now(),
+  const handlePublish = (title: string, content: string, image: string | null, publishDate: string) => {
+    createAnnouncement({
       title,
       content,
-      image: image || "https://via.placeholder.com/300x150.png?text=New+Announcement",
-    };
-    setAnnouncements((prev) => [newAnnouncement, ...prev]);
+      imageUrl: image || undefined,
+      publishDate,
+    });
   };
 
-  const handleDelete = (id: number) =>
-    setAnnouncements((prev) => prev.filter((a) => a.id !== id));
+  const handleDelete = (id: number) => {
+    // TODO: Implement delete API call
+    console.log('Delete announcement:', id);
+  };
 
   const handleEdit = (id: number) => {
     const toEdit = announcements.find((a) => a.id === id);
@@ -43,10 +32,9 @@ const Announcements = () => {
   }
 
   const handleSaveEdit = (updated: Announcement) => {
-    setAnnouncements((prev) =>
-      prev.map((a) => (a.id === updated.id ? updated : a))
-    );
-    setEditingAnnouncement(null)
+    // TODO: Implement update API call
+    console.log('Update announcement:', updated);
+    setEditingAnnouncement(null);
   }
 
   return (
@@ -67,8 +55,17 @@ const Announcements = () => {
       {/* Active Announcements */}
       <section className="mb-8">
         <h2 className="font-semibold text-lg mb-4">Active Announcements</h2>
+
+        {isLoading && (
+          <p className="text-gray-500 text-sm">Loading announcements...</p>
+        )}
+
+        {error && (
+          <p className="text-red-500 text-sm">Error loading announcements. Please try again.</p>
+        )}
+
         <div className="space-y-4">
-          {announcements.length > 0 ? (
+          {!isLoading && !error && announcements.length > 0 ? (
             announcements.map((item) => (
               <AnnouncementCard
                 key={item.id}
@@ -77,9 +74,9 @@ const Announcements = () => {
                 onEdit={handleEdit}
               />
             ))
-          ) : (
+          ) : !isLoading && !error ? (
             <p className="text-gray-500 text-sm">No active announcements.</p>
-          )}
+          ) : null}
         </div>
       </section>
 

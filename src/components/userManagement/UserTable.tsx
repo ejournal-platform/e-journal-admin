@@ -18,6 +18,9 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
   const [editNic, setEditNic] = useState("");
   const [editRole, setEditRole] = useState("End User");
   const [editingUser, setEditingUser] = useState<User | null>(null);
+  // const [editPhone, setEditPhone] = useState<number>(0);
+  // const [editWhatsApp, setEditWhatsApp] = useState<number>(0);
+  // const [editDistrict, setEditDistrict] = useState("");
 
   const handleEditClick = (user: User) => {
     setEditingUser(user);
@@ -157,6 +160,7 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
                       <option value="Master Trainer">Master Trainer</option>
                       <option value="TOT">TOT</option>
                       <option value="End User">End User</option>
+                      <option value="Admin">Admin</option>
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                       <MdKeyboardArrowDown className="w-4 h-4" />
@@ -195,12 +199,11 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
 
             <div className="space-y-3 text-gray-700">
               <p><strong>Name:</strong> {selectedUser.name}</p>
-              <p><strong>Email:</strong> {selectedUser.email || "N/A"}</p>
-              <p><strong>Phone:</strong> {selectedUser.phone || "N/A"}</p>
-              <p><strong>WhatsApp:</strong> {selectedUser.whatsapp || "N/A"}</p>
+              <p><strong>NIC:</strong> {selectedUser.nic || "N/A"}</p>
+              <p><strong>Phone:</strong> {selectedUser.phoneNumber || "N/A"}</p>
+              <p><strong>WhatsApp:</strong> {selectedUser.whatsAppNumber || "N/A"}</p>
               <p><strong>District:</strong> {selectedUser.district || "N/A"}</p>
               <p><strong>Role:</strong> {selectedUser.role}</p>
-              <p><strong>Password:</strong> {selectedUser.password || "••••••"}</p>
             </div>
 
             <div className="flex justify-end mt-6">

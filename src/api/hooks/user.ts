@@ -15,6 +15,9 @@ export interface AuthorizedUserResponse {
     role: string;
     firstName: string;
     lastName: string;
+    phoneNumber: number;
+    whatsAppNumber: number;
+    district: string;
 }
 
 export const useCreateAuthorizedUser = () => {

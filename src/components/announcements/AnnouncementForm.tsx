@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { FaImage, FaTimes } from "react-icons/fa";
 
 interface AnnouncementFormProps {
-  onPublish: (title: string, content: string, image: string | null) => void;
+  onPublish: (title: string, content: string, image: string | null, publishDate: string) => void;
 }
 
 const AnnouncementForm: React.FC<AnnouncementFormProps> = ({ onPublish }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState<string | null>(null);
+  const [publishDate, setPublishDate] = useState("");
 
   // Handle image selection
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,14 +27,15 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = ({ onPublish }) => {
   // Form submit
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !content.trim()) return;
+    if (!title.trim() || !content.trim() || !publishDate) return;
 
-    onPublish(title, content, image);
+    onPublish(title, content, image, publishDate);
 
     // Reset form
     setTitle("");
     setContent("");
     setImage(null);
+    setPublishDate("");
   };
 
   return (
@@ -67,6 +69,18 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = ({ onPublish }) => {
             className="w-full border border-gray-300 rounded-lg px-3 py-2 h-28 resize-none focus:outline-none! focus:ring-1 focus:ring-green-400"
             required
             maxLength={300}
+          />
+        </div>
+
+        {/* Publish Date */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">Publish Date</label>
+          <input
+            type="datetime-local"
+            value={publishDate}
+            onChange={(e) => setPublishDate(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none! focus:ring-1 focus:ring-green-400"
+            required
           />
         </div>
 

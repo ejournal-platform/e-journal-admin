@@ -2,6 +2,7 @@ export interface Announcement {
   id: number;
   title: string;
   content: string;
-  image?: string | null;
+  imageUrl?: string | null;
+  publishDate?: string;
   isPast?: boolean;
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaTimes, FaImage } from "react-icons/fa";
-import { Announcement } from "./types";
+import { Announcement } from "../../api/hooks/announcement";
 
 interface EditAnnouncementModalProps {
   announcement: Announcement;
@@ -15,7 +15,8 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({
 }) => {
   const [title, setTitle] = useState(announcement.title);
   const [content, setContent] = useState(announcement.content);
-  const [image, setImage] = useState<string | null>(announcement.image || null);
+  const [image, setImage] = useState<string | null>(announcement.imageUrl || null);
+  const [publishDate, setPublishDate] = useState(announcement.publishDate || "");
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -33,7 +34,8 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({
       ...announcement,
       title,
       content,
-      image,
+      imageUrl: image,
+      publishDate,
     });
   };
 
@@ -70,6 +72,17 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({
             value={content}
             onChange={(e) => setContent(e.target.value)}
             className="w-full border border-gray-300 rounded-lg px-3 py-2 h-28 resize-none focus:ring-1 focus:ring-green-400 focus:outline-none!"
+          />
+        </div>
+
+        {/* Publish Date */}
+        <div className="mb-4">
+          <label className="block text-gray-700 font-medium mb-1">Publish Date</label>
+          <input
+            type="datetime-local"
+            value={publishDate}
+            onChange={(e) => setPublishDate(e.target.value)}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-1 focus:ring-green-400 focus:outline-none!"
           />
         </div>
 

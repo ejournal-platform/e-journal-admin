@@ -20,7 +20,9 @@ const UserManagement = () => {
       name: `${u.firstName} ${u.lastName}`,
       nic: u.nic,
       role: u.role,
-      // email, phone, etc are not in the list response yet, maybe add later if needed
+      phoneNumber: u.phoneNumber ? String(u.phoneNumber) : '',
+      whatsAppNumber: u.whatsAppNumber ? String(u.whatsAppNumber) : '',
+      district: u.district,
     }));
   }, [usersData]);
 

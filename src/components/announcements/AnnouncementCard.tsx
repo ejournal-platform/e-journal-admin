@@ -1,5 +1,5 @@
 import { FaEdit, FaTrash, FaUndo, FaArchive } from "react-icons/fa";
-import { Announcement } from "./types";
+import { Announcement } from "../../api/hooks/announcement";
 
 interface AnnouncementCardProps {
     item: Announcement;
@@ -7,13 +7,13 @@ interface AnnouncementCardProps {
     onEdit?: (id: number) => void;
 }
 
-const AnnouncementCard = ({item, onDelete, onEdit,} : AnnouncementCardProps) => {
+const AnnouncementCard = ({ item, onDelete, onEdit, }: AnnouncementCardProps) => {
     return (
         <div className="bg-white border border-gray-300 rounded-xl shadow-lg p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             {/* Image */}
             <div className="shrink-0">
                 <img
-                    src={item.image}
+                    src={item.imageUrl || "https://via.placeholder.com/150"}
                     alt={item.title}
                     className="w-full sm:w-50 h-38 object-cover rounded-lg"
                 />
@@ -23,6 +23,11 @@ const AnnouncementCard = ({item, onDelete, onEdit,} : AnnouncementCardProps) => 
             <div className="flex-1 flex flex-col justify-between h-38">
                 <div>
                     <h3 className="font-semibold text-gray-800 line-clamp-1">{item.title}</h3>
+                    {item.publishDate && (
+                        <p className="text-xs text-gray-500 mb-1">
+                            {new Date(item.publishDate).toLocaleDateString()}
+                        </p>
+                    )}
                     <p className="text-gray-600 text-sm mt-2 line-clamp-3">{item.content}</p>
                 </div>
 
