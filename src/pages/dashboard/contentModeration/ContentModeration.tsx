@@ -122,7 +122,6 @@ const ContentModeration = () => {
                     <td className="py-3 gap-3 text-center space-x-3">
                       <button
                         onClick={() => {
-                          console.log('🔍 View button clicked for post:', post);
                           setViewingPost(post);
                         }}
                         className="px-3 py-1 bg-blue-600! text-white text-sm! rounded hover:bg-blue-700! focus:outline-none! border-none!"
@@ -199,7 +198,6 @@ const ContentModeration = () => {
                     <div className="space-y-4">
                       {viewingPost.mediaUrls.map((url, index) => {
                         const mediaType = getMediaType(url);
-                        console.log(`🔍 Media ${index + 1}:`, { url, detectedType: mediaType });
 
                         return (
                           <div key={index} className="w-full border border-gray-200 rounded-lg overflow-hidden">
