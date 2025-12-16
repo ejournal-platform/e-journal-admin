@@ -130,14 +130,14 @@ const ContentModeration = () => {
                       </button>
                       <button
                         onClick={() => handleApprove(post.id)}
-                        disabled={isApproving || isRejecting}
+                        // disabled={isApproving || isRejecting}
                         className="px-3 py-1 bg-green-600! text-white text-sm! rounded hover:bg-green-700! disabled:opacity-50 focus:outline-none! border-none!"
                       >
                         Approve
                       </button>
                       <button
                         onClick={() => handleReject(post.id)}
-                        disabled={isApproving || isRejecting}
+                        // disabled={isApproving || isRejecting}
                         className="px-3 py-1 bg-red-600! text-white text-sm! rounded hover:bg-red-700! disabled:opacity-50 focus:outline-none! border-none!"
                       >
                         Reject
@@ -290,20 +290,6 @@ const ContentModeration = () => {
               </div>
 
               <div className="flex mt-6 pt-6 justify-end border-t">
-                {/* <button
-                  onClick={() => handleApprove(viewingPost.id)}
-                  disabled={isApproving || isRejecting}
-                  className="flex-1 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
-                >
-                  Approve
-                </button>
-                <button
-                  onClick={() => handleReject(viewingPost.id)}
-                  disabled={isApproving || isRejecting}
-                  className="flex-1 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50"
-                >
-                  Reject
-                </button> */}
                 <button
                   onClick={() => setViewingPost(null)}
                   className="px-4 py-2 bg-gray-200! text-sm! text-gray-700 rounded hover:bg-gray-300! focus:outline-none! border-none!"

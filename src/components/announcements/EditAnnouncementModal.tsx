@@ -35,7 +35,7 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({
       title,
       content,
       imageUrl: image,
-      publishDate,
+      // publishDate,
     });
   };
 
@@ -76,7 +76,7 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({
         </div>
 
         {/* Publish Date */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label className="block text-gray-700 font-medium mb-1">Publish Date</label>
           <input
             type="datetime-local"
@@ -84,7 +84,7 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({
             onChange={(e) => setPublishDate(e.target.value)}
             className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-1 focus:ring-green-400 focus:outline-none! text-gray-900"
           />
-        </div>
+        </div> */}
 
         {/* Image */}
         <div className="mb-4">

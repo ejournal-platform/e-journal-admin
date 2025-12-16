@@ -4,8 +4,8 @@ export interface User {
   nic: string;
   role: string;
   email?: string;
-  phoneNumber?: string;
-  whatsAppNumber?: string;
+  phone?: string;
+  whatsapp?: string;
   district?: string;
   password?: string;
 }

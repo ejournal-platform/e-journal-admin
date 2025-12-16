@@ -201,8 +201,8 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
             <div className="space-y-3 text-gray-700">
               <p><strong>Name:</strong> {selectedUser.name}</p>
               <p><strong>NIC:</strong> {selectedUser.nic || "N/A"}</p>
-              <p><strong>Phone:</strong> {selectedUser.phoneNumber || "N/A"}</p>
-              <p><strong>WhatsApp:</strong> {selectedUser.whatsAppNumber || "N/A"}</p>
+              <p><strong>Phone:</strong> {selectedUser.phone || "N/A"}</p>
+              <p><strong>WhatsApp:</strong> {selectedUser.whatsapp || "N/A"}</p>
               <p><strong>District:</strong> {selectedUser.district || "N/A"}</p>
               <p><strong>Role:</strong> {selectedUser.role}</p>
             </div>

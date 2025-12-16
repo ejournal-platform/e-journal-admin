@@ -20,9 +20,9 @@ const UserManagement = () => {
       name: `${u.firstName} ${u.lastName}`,
       nic: u.nic,
       role: u.role,
-      phoneNumber: u.phoneNumber ? String(u.phoneNumber) : '',
-      whatsAppNumber: u.whatsAppNumber ? String(u.whatsAppNumber) : '',
-      district: u.district,
+      phone: u.phone || '',
+      whatsapp: u.whatsapp || '',
+      district: u.district || '',
     }));
   }, [usersData]);
 
