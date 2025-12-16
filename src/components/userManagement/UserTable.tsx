@@ -130,7 +130,7 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
                   type="text"
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:ring-green-400 focus:outline-none"
+                  className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:ring-green-400 focus:outline-none text-gray-900"
                 />
               </div>
 
@@ -142,7 +142,8 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
                   type="text"
                   value={editNic}
                   onChange={(e) => setEditNic(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:ring-green-400 focus:outline-none"
+                  className="w-full border border-gray-300 rounded-lg py-2 px-3 focus:ring-green-400 focus:outline-none text-gray-900 bg-gray-100 cursor-not-allowed"
+                  disabled
                 />
               </div>
 
@@ -155,7 +156,7 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
                     <select
                       value={editRole}
                       onChange={(e) => setEditRole(e.target.value)}
-                      className="w-full border border-gray-300 rounded-lg appearance-none py-2 px-3 focus:ring-green-400 focus:outline-none"
+                      className="w-full border border-gray-300 rounded-lg appearance-none py-2 px-3 focus:ring-green-400 focus:outline-none text-gray-900"
                     >
                       <option value="Master Trainer">Master Trainer</option>
                       <option value="TOT">TOT</option>

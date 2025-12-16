@@ -18,7 +18,7 @@ const AdminLogin = () => {
     login(
       { nic, password },
       {
-        onSuccess: (data : any) => {
+        onSuccess: (data: any) => {
           localStorage.setItem('token', data.token); // Store token manually as Admin might not use AuthContext yet or uses it differently
           setMessage({
             type: "success",
@@ -78,7 +78,7 @@ const AdminLogin = () => {
                 id="nic"
                 value={nic}
                 onChange={(e) => setNic(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg py-2 px-3 pr-10 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
+                className="w-full border border-gray-300 rounded-lg py-2 px-3 pr-10 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 text-gray-900"
                 placeholder="Enter NIC"
                 required
               />
@@ -97,7 +97,7 @@ const AdminLogin = () => {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg py-2 px-3 pr-10 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
+                className="w-full border border-gray-300 rounded-lg py-2 px-3 pr-10 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 text-gray-900"
                 placeholder="Enter Password"
                 required
               />

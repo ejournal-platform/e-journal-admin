@@ -16,7 +16,7 @@ const UserManagement = () => {
   const users: User[] = useMemo(() => {
     if (!usersData) return [];
     return usersData.map(u => ({
-      id: u.id || "", // Backend should return ID
+      id: u.nic || "", // NIC is the unique identifier
       name: `${u.firstName} ${u.lastName}`,
       nic: u.nic,
       role: u.role,

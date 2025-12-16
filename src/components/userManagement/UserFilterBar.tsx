@@ -9,7 +9,7 @@ interface UserFilterBarProps {
   onAddUserClick: () => void;
 }
 
-const UserFilterBar = ({ search, selectedRole, onSearchChange, onRoleChange, onAddUserClick} : UserFilterBarProps) => {
+const UserFilterBar = ({ search, selectedRole, onSearchChange, onRoleChange, onAddUserClick }: UserFilterBarProps) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 mb-6">
       <div className="flex flex-col md:flex-row justify-between items-center gap-4">
@@ -18,7 +18,7 @@ const UserFilterBar = ({ search, selectedRole, onSearchChange, onRoleChange, onA
           placeholder="Search by name or NIC number"
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="grow p-2 border border-gray-300 rounded-md focus:ring-green-500! focus:border-green-500! focus:outline-none text-sm"
+          className="grow p-2 border border-gray-300 rounded-md focus:ring-green-500! focus:border-green-500! focus:outline-none text-sm text-gray-900"
         />
 
         <div className="flex space-x-3 justify-center items-center">

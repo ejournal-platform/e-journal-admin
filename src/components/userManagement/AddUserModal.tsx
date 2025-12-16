@@ -52,7 +52,7 @@ const AddUserModal = ({ isOpen, onClose, onSave }: AddUserModalProps) => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Full Name"
-                        className="w-full border border-gray-300 text-sm p-2 rounded-md focus:border-gray-500! focus:outline-none"
+                        className="w-full border border-gray-300 text-sm p-2 rounded-md focus:border-gray-500! focus:outline-none text-gray-900"
                         required
                     />
 
@@ -64,7 +64,7 @@ const AddUserModal = ({ isOpen, onClose, onSave }: AddUserModalProps) => {
                                 if (nicError) setNicError("");
                             }}
                             placeholder="NIC Number"
-                            className="w-full border border-gray-300 p-2 text-sm rounded-md focus:border-gray-500! focus:outline-none"
+                            className="w-full border border-gray-300 p-2 text-sm rounded-md focus:border-gray-500! focus:outline-none text-gray-900"
                             required
                         />
                         {nicError && (
@@ -77,7 +77,7 @@ const AddUserModal = ({ isOpen, onClose, onSave }: AddUserModalProps) => {
                             <select
                                 value={role}
                                 onChange={(e) => setRole(e.target.value)}
-                                className="w-full border border-gray-300 appearance-none text-sm p-2 rounded-md focus:border-gray-500! focus:outline-none"
+                                className="w-full border border-gray-300 appearance-none text-sm p-2 rounded-md focus:border-gray-500! focus:outline-none text-gray-900"
                                 required
                             >
                                 <option>Master Trainer</option>
