@@ -61,7 +61,7 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-1 focus:ring-green-400 focus:outline-none!"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-1 focus:ring-green-400 focus:outline-none! text-gray-900"
           />
         </div>
 
@@ -71,7 +71,7 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 h-28 resize-none focus:ring-1 focus:ring-green-400 focus:outline-none!"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 h-28 resize-none focus:ring-1 focus:ring-green-400 focus:outline-none! text-gray-900"
           />
         </div>
 
@@ -82,7 +82,7 @@ const EditAnnouncementModal: React.FC<EditAnnouncementModalProps> = ({
             type="datetime-local"
             value={publishDate}
             onChange={(e) => setPublishDate(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-1 focus:ring-green-400 focus:outline-none!"
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-1 focus:ring-green-400 focus:outline-none! text-gray-900"
           />
         </div>
 

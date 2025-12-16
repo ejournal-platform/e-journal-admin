@@ -7,17 +7,34 @@ import AnnouncementCard from "../../../components/announcements/AnnouncementCard
 import EditAnnouncementModal from "../../../components/announcements/EditAnnouncementModal";
 
 const Announcements = () => {
-  const { data: announcements = [], isLoading, error } = useGetAnnouncements();
+  const { data, isLoading, error } = useGetAnnouncements();
+  const announcements = data || [];
   const { mutate: createAnnouncement } = useCreateAnnouncement();
-
   const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
 
-  const handlePublish = (title: string, content: string, image: string | null, publishDate: string) => {
+  const [message, setMessage] = useState<string | null>(null);
+
+  // Sort announcements by publishDate descending (fallback to createdAt or 0)
+  const sortedAnnouncements = [...announcements].sort((a, b) => {
+    const dateA = new Date(a.publishDate || a.createdAt || 0).getTime();
+    const dateB = new Date(b.publishDate || b.createdAt || 0).getTime();
+    return dateB - dateA;
+  });
+
+  const handlePublish = (title: string, content: string, mediaId: string | null) => {
     createAnnouncement({
       title,
       content,
-      imageUrl: image || undefined,
-      publishDate,
+      mediaId: mediaId || undefined,
+    }, {
+      onSuccess: () => {
+        setMessage("✅ Announcement published successfully!");
+        // Clear message after 3 seconds
+        setTimeout(() => setMessage(null), 3000);
+      },
+      onError: () => {
+        setMessage("❌ Failed to publish announcement.");
+      }
     });
   };
 
@@ -52,9 +69,16 @@ const Announcements = () => {
         <AnnouncementForm onPublish={handlePublish} />
       </div>
 
+      {/* Message Toast */}
+      {message && (
+        <div className={`mb-4 p-4 rounded-md text-center font-bold ${message.startsWith('✅') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+          {message}
+        </div>
+      )}
+
       {/* Active Announcements */}
       <section className="mb-8">
-        <h2 className="font-semibold text-lg mb-4">Active Announcements</h2>
+        <h2 className="font-semibold text-lg mb-4 text-gray-900">Active Announcements</h2>
 
         {isLoading && (
           <p className="text-gray-500 text-sm">Loading announcements...</p>
@@ -65,8 +89,8 @@ const Announcements = () => {
         )}
 
         <div className="space-y-4">
-          {!isLoading && !error && announcements.length > 0 ? (
-            announcements.map((item) => (
+          {!isLoading && !error && sortedAnnouncements.length > 0 ? (
+            sortedAnnouncements.map((item) => (
               <AnnouncementCard
                 key={item.id}
                 item={item}

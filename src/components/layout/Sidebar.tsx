@@ -3,10 +3,10 @@ import { FiLogOut, FiSettings } from "react-icons/fi";
 import { MdAssignment, MdCampaign, MdLibraryBooks, MdGroups } from "react-icons/md";
 
 interface SidebarProps {
-//   userRole: string;
+  //   userRole: string;
   currentPath: string;
   navigate: (path: string) => void;
-  openLogoutModel?: () => void; 
+  openLogoutModel?: () => void;
 }
 
 const navItems = [
@@ -37,7 +37,7 @@ const Sidebar = ({ currentPath, navigate, openLogoutModel }: SidebarProps) => {
                 onClick={() => navigate(item.path)}
                 className={`flex text-md items-center w-full text-left p-3 rounded-lg transition focus:outline-none! border-none! ${isActive
                   ? "bg-green-100! text-green-700 font-bold!"
-                  : "text-gray-600! hover:bg-gray-100!"
+                  : "text-white! hover:bg-gray-100! hover:text-gray-900!"
                   }`}
               >
                 {item.icon({ className: 'h-5 w-5 mr-3' })}
@@ -56,7 +56,7 @@ const Sidebar = ({ currentPath, navigate, openLogoutModel }: SidebarProps) => {
             Logout
           </button>
         </div>
-      </aside>    
+      </aside>
     </>
   );
 };

@@ -14,7 +14,7 @@ export interface Announcement {
 export interface CreateAnnouncementRequest {
     title: string;
     content: string;
-    imageUrl?: string;
+    mediaId?: string;
     publishDate?: string;
 }
 
@@ -22,9 +22,9 @@ export const useGetAnnouncements = () => {
     return useQuery({
         queryKey: ['announcements'],
         queryFn: async () => {
-            console.log('🔵 Fetching announcements from API: /admin/announcement');
+            console.log('🔵 Fetching announcements from API: /announcements/announcements');
             try {
-                const response = await client.get<Announcement[]>('/admin/announcement');
+                const response = await client.get<Announcement[]>('/announcements/announcements');
                 console.log('✅ Announcements fetched successfully:', response.data);
                 return response.data;
             } catch (error) {
@@ -41,7 +41,7 @@ export const useCreateAnnouncement = () => {
         mutationFn: async (data: CreateAnnouncementRequest) => {
             console.log('🔵 Creating announcement:', data);
             try {
-                const response = await client.post('/admin/announcement', data);
+                const response = await client.post('/announcements/announcements', data);
                 console.log('✅ Announcement created successfully:', response.data);
                 return response.data;
             } catch (error) {
