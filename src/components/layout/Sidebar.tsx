@@ -36,8 +36,8 @@ const Sidebar = ({ currentPath, navigate, openLogoutModel }: SidebarProps) => {
                 key={item.name}
                 onClick={() => navigate(item.path)}
                 className={`flex text-md items-center w-full text-left p-3 rounded-lg transition focus:outline-none! border-none! ${isActive
-                  ? "bg-green-100! text-green-700 font-bold!"
-                  : "text-white! hover:bg-gray-100! hover:text-gray-900!"
+                  ? "bg-green-200! text-green-700! font-bold!"
+                  : "text-gray-900! bg-gray-200! hover:text-white"
                   }`}
               >
                 {item.icon({ className: 'h-5 w-5 mr-3' })}
