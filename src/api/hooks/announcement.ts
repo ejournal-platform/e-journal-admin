@@ -18,6 +18,13 @@ export interface CreateAnnouncementRequest {
     publishDate?: string;
 }
 
+export interface UpdateAnnouncementRequest {
+    title: string;
+    content: string;
+    mediaId?: string;
+    publishDate?: string;
+}
+
 export const useGetAnnouncements = () => {
     return useQuery({
         queryKey: ['announcements'],
@@ -52,6 +59,48 @@ export const useCreateAnnouncement = () => {
         onSuccess: () => {
             console.log('✅ Announcement created, invalidating cache...');
             // Invalidate relevant queries if any, e.g., 'announcements'
+            queryClient.invalidateQueries({ queryKey: ['announcements'] });
+        },
+    });
+};
+
+export const useUpdateAnnouncement = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async ({ id, data }: { id: string; data: UpdateAnnouncementRequest }) => {
+            console.log('🔵 Updating announcement:', id, data);
+            try {
+                const response = await client.put(`/announcements/announcements/${id}`, data);
+                console.log('✅ Announcement updated successfully:', response.data);
+                return response.data;
+            } catch (error) {
+                console.error('❌ Error updating announcement:', error);
+                throw error;
+            }
+        },
+        onSuccess: () => {
+            console.log('✅ Announcement updated, invalidating cache...');
+            queryClient.invalidateQueries({ queryKey: ['announcements'] });
+        },
+    });
+};
+
+export const useDeleteAnnouncement = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (id: number) => {
+            console.log('🔵 Deleting announcement:', id);
+            try {
+                const response = await client.delete(`/announcements/announcements/${id}`);
+                console.log('✅ Announcement deleted successfully:', response.data);
+                return response.data;
+            } catch (error) {
+                console.error('❌ Error deleting announcement:', error);
+                throw error;
+            }
+        },
+        onSuccess: () => {
+            console.log('✅ Announcement deleted, invalidating cache...');
             queryClient.invalidateQueries({ queryKey: ['announcements'] });
         },
     });

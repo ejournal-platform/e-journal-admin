@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCreateAnnouncement, useGetAnnouncements } from "../../../api/hooks/announcement";
+import { useCreateAnnouncement, useGetAnnouncements, useUpdateAnnouncement, useDeleteAnnouncement } from "../../../api/hooks/announcement";
 import type { Announcement } from "../../../api/hooks/announcement";
 
 import AnnouncementForm from "../../../components/announcements/AnnouncementForm";
@@ -10,6 +10,8 @@ const Announcements = () => {
   const { data, isLoading, error } = useGetAnnouncements();
   const announcements = data || [];
   const { mutate: createAnnouncement } = useCreateAnnouncement();
+  const { mutate: updateAnnouncement } = useUpdateAnnouncement();
+  const { mutate: deleteAnnouncement } = useDeleteAnnouncement();
   const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
 
   const [message, setMessage] = useState<string | null>(null);
@@ -39,8 +41,17 @@ const Announcements = () => {
   };
 
   const handleDelete = (id: number) => {
-    // TODO: Implement delete API call
-    console.log('Delete announcement:', id);
+    if (window.confirm("Are you sure you want to delete this announcement?")) {
+      deleteAnnouncement(id, {
+        onSuccess: () => {
+          setMessage("✅ Announcement deleted successfully!");
+          setTimeout(() => setMessage(null), 3000);
+        },
+        onError: () => {
+          setMessage("❌ Failed to delete announcement.");
+        }
+      });
+    }
   };
 
   const handleEdit = (id: number) => {
@@ -49,9 +60,24 @@ const Announcements = () => {
   }
 
   const handleSaveEdit = (updated: Announcement) => {
-    // TODO: Implement update API call
-    console.log('Update announcement:', updated);
-    setEditingAnnouncement(null);
+    updateAnnouncement({
+      id: updated.id.toString(),
+      data: {
+        title: updated.title,
+        content: updated.content,
+        mediaId: undefined, // media update logic if needed
+        publishDate: updated.publishDate
+      }
+    }, {
+      onSuccess: () => {
+        setMessage("✅ Announcement updated successfully!");
+        setEditingAnnouncement(null);
+        setTimeout(() => setMessage(null), 3000);
+      },
+      onError: () => {
+        setMessage("❌ Failed to update announcement.");
+      }
+    });
   }
 
   return (
