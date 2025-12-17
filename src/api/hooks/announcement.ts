@@ -6,6 +6,7 @@ export interface Announcement {
     title: string;
     content: string;
     imageUrl?: string | null;
+    mediaId?: string;
     publishDate?: string;
     createdAt?: string;
     updatedAt?: string;

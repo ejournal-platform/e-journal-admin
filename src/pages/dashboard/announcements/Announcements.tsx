@@ -65,7 +65,7 @@ const Announcements = () => {
       data: {
         title: updated.title,
         content: updated.content,
-        mediaId: undefined, // media update logic if needed
+        mediaId: updated.mediaId,
         publishDate: updated.publishDate
       }
     }, {
