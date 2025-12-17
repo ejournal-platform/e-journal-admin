@@ -15,8 +15,8 @@ export interface AuthorizedUserResponse {
     role: string;
     firstName: string;
     lastName: string;
-    phoneNumber: number;
-    whatsAppNumber: number;
+    phone: string;
+    whatsapp: string;
     district: string;
 }
 
