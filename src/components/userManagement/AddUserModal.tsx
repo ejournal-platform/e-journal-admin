@@ -80,10 +80,10 @@ const AddUserModal = ({ isOpen, onClose, onSave }: AddUserModalProps) => {
                                 className="w-full border border-gray-300 appearance-none text-sm p-2 rounded-md focus:border-gray-500! focus:outline-none text-gray-900"
                                 required
                             >
-                                <option>Master Trainer</option>
-                                <option>TOT</option>
-                                <option>End User</option>
-                                <option>Admin</option>
+                                <option value="master-trainer">Master Trainer</option>
+                                <option value="tot">TOT</option>
+                                <option value="end-user">End User</option>
+                                <option value="admin">Admin</option>
                             </select>
                             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                 <MdKeyboardArrowDown className="w-4 h-4" />

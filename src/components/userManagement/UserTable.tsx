@@ -158,10 +158,10 @@ const UserTable = ({ users, onEdit, onDelete }: UserTableProps) => {
                       onChange={(e) => setEditRole(e.target.value)}
                       className="w-full border border-gray-300 rounded-lg appearance-none py-2 px-3 focus:ring-green-400 focus:outline-none text-gray-900"
                     >
-                      <option value="Master Trainer">Master Trainer</option>
-                      <option value="TOT">TOT</option>
-                      <option value="End User">End User</option>
-                      <option value="Admin">Admin</option>
+                      <option value="master-trainer">Master Trainer</option>
+                      <option value="tot">TOT</option>
+                      <option value="end-user">End User</option>
+                      <option value="admin">Admin</option>
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                       <MdKeyboardArrowDown className="w-4 h-4" />
