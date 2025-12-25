@@ -11,7 +11,7 @@ interface AddUserModalProps {
 const AddUserModal = ({ isOpen, onClose, onSave }: AddUserModalProps) => {
     const [name, setName] = useState("");
     const [nic, setNic] = useState("");
-    const [role, setRole] = useState("Master Trainer");
+    const [role, setRole] = useState("master-trainer");
     const [nicError, setNicError] = useState("");
 
     if (!isOpen) return null;
@@ -38,7 +38,7 @@ const AddUserModal = ({ isOpen, onClose, onSave }: AddUserModalProps) => {
         onSave({ name, nic, role });
         setName("");
         setNic("");
-        setRole("Master Trainer");
+        setRole("master-trainer");
         onClose();
         setNicError("");
     };

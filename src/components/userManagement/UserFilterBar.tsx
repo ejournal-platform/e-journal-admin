@@ -29,10 +29,10 @@ const UserFilterBar = ({ search, selectedRole, onSearchChange, onRoleChange, onA
               className="appearance-none  bg-white border border-gray-300 text-gray-700 py-2 pl-3 pr-8 rounded-md leading-tight focus:outline-none focus:ring-green-500! text-sm"
             >
               <option value="All">All Roles</option>
-              <option value="Master Trainer">Master Trainer</option>
-              <option value="TOT">TOT</option>
-              <option value="End User">End User</option>
-              <option value="Admin">Admin</option>
+              <option value="master-trainer">Master Trainer</option>
+              <option value="tot">TOT</option>
+              <option value="end-user">End User</option>
+              <option value="admin">Admin</option>
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <MdKeyboardArrowDown className="w-4 h-4" />
