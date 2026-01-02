@@ -137,7 +137,7 @@ const ContentModeration = () => {
                       </button>
                       <button
                         onClick={() => handleReject(post.id)}
-                        // disabled={isApproving || isRejecting}
+                        //  
                         className="px-3 py-1 bg-red-600! text-white text-sm! rounded hover:bg-red-700! disabled:opacity-50 focus:outline-none! border-none!"
                       >
                         Reject
@@ -188,7 +188,10 @@ const ContentModeration = () => {
                 <div>
                   <p className="text-sm text-gray-500 mb-2">Caption</p>
                   <p className="text-gray-800 whitespace-pre-wrap bg-gray-50 p-4 rounded">
-                    {viewingPost.caption.split('\n')[2]}
+                    {viewingPost.caption
+                      .replace(/^\*\*\*\*\s+/, '')
+                      .replace(/\s+Date:.*$/, '')
+                    }
                   </p>
                 </div>
 
