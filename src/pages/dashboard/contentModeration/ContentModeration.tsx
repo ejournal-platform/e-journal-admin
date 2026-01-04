@@ -189,7 +189,7 @@ const ContentModeration = () => {
                   <p className="text-sm text-gray-500 mb-2">Caption</p>
                   <p className="text-gray-800 whitespace-pre-wrap bg-gray-50 p-4 rounded">
                     {viewingPost.caption
-                      .replace(/^\*\*\*\*\s+/, '')
+                      .replace(/^\*\*\*\*\s+/, '') //only show user's deswcriptions
                       .replace(/\s+Date:.*$/, '')
                     }
                   </p>
