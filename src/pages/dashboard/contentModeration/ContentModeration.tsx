@@ -62,15 +62,18 @@ const ContentModeration = () => {
     if (!postsData) return [];
     return postsData.map((post) => ({
       id: post.id,
-      description: post.caption.split('\n')[2].length > 0
-        ? post.caption.split('\n')[2].length > 20
-          ? post.caption.split('\n')[2].slice(0, 20) + "..." : post.caption.split('\n')[2]
+      description: post.caption
+        ? (post.caption.split('\n')[2]?.length > 0
+          ? (post.caption.split('\n')[2].length > 20
+            ? post.caption.split('\n')[2].slice(0, 20) + "..."
+            : post.caption.split('\n')[2])
+          : post.caption.slice(0, 20) + (post.caption.length > 20 ? "..." : ""))
         : "Untitled",
       author: `${post.author.firstName} ${post.author.lastName}`,
       date: new Date(post.createdAt).toLocaleDateString(),
-      images: post.mediaUrls.length,
-      caption: post.caption,
-      mediaUrls: post.mediaUrls,
+      images: post.mediaUrls?.length || 0,
+      caption: post.caption || "",
+      mediaUrls: post.mediaUrls || [],
     }));
   }, [postsData]);
 
